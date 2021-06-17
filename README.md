@@ -4,7 +4,7 @@ Go inside the repo folder
 
 then do this :
 
-npm install .
+npm install . ( the DOT sign (.) indicates that we're in the current bloody directory OK ?? )
 
 done
 
