@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 });
+
 // adding generateAuthToken function for creating JWT token.
 userSchema.methods.generateAuthToken = function() {
     const token = jwt.sign({_id: this._id, rule: this.rule}, 'wonderland');

@@ -5,8 +5,77 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
+router.get('/:id', isAuthenticated, isAdmin, async (req, res) => {
+
+    const user = await User.findOne({code: req.params['id']}).catch(
+        res.status(404).json({
+            success: false,
+            message: "User doesnt exist."
+        })
+    );
+
+    res.status(200).json({
+        success: true,
+        message: "User returned successfully.",
+        data: {
+            code: user.code,
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            rule: user.rule
+        }
+    });
+
+});
+
+router.put('/:id', isAuthenticated, isAdmin, async (req, res) => {
+
+    const user = await User.findOne({code: req.params['id']}).catch(
+        res.status(404).json({
+            success: false,
+            message: "User doesnt exist.",
+        })
+    );
+
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.code = req.body.code;
+
+    await user.save();
+
+    res.status(200).json({
+        success: true,
+        message: "User updated successfully.",
+        data: {
+            code: user.code,
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName
+        }
+    });
+
+});
+
+router.delete('/:id', isAuthenticated, isAdmin, async (req, res) => {
+
+    const deletedUser = await User.findOneAndDelete({code: req.params['id']}).catch(
+        res.status(404).json({
+            success: false,
+            message: "User doesnt exist.",
+        })
+    );
+
+    res.status(200).json({
+        id: deletedUser._id,
+        firstName: deletedUser.firstName,
+        lastName: deletedUser.lastName,
+        code: deletedUser.code
+    });
+
+});
 
 router.post('/Add', isAuthenticated, isAdmin, async (req, res) => {
+
     const { error } = validate(req);
     if (error) return res.status(400).json({
         success: false,
@@ -34,7 +103,7 @@ router.post('/Add', isAuthenticated, isAdmin, async (req, res) => {
 
     const token = user.generateAuthToken();
 
-    res.header('x-auth-token', token).json({
+    res.status(200).json({
         success: true,
         message: "User created successfully.",
         data: {
@@ -42,7 +111,7 @@ router.post('/Add', isAuthenticated, isAdmin, async (req, res) => {
             lastName: req.body.lastName,
             code: req.body.code,
             rule: req.body.rule,
-            id: user._id.toString()
+            id: user._id
         }
     });
 
@@ -86,7 +155,7 @@ router.post('/AddList', isAuthenticated, isAdmin, async (req, res) => {
             id: user._id
         });
     }
-    res.json({
+    res.status(200).json({
         message: 'Users are created successfully.',
         success: true,
         data: response
