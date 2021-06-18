@@ -5,6 +5,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
+/*
+    /api/users
+*/
+
 router.get('/:id', isAuthenticated, isAdmin, async (req, res) => {
 
     const user = await User.findOne({code: req.params['id']}).catch(

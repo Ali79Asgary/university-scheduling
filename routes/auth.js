@@ -55,7 +55,7 @@ router.post("/Login", async (req, res) => {
 function validateRequest(req, res) {
     const schema = Joi.object({
         password: Joi.string().min(6).max(1024).required(),
-        code: Joi.string().min(9).max(10).required(),
+        code: Joi.string().min(5).max(10).required(),
     });
 
     return schema.validate(req.body);

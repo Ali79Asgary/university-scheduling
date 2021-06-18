@@ -10,10 +10,10 @@ const opts = {
         useNewUrlParser: true, 
         useUnifiedTopology: true 
     },
-    MONGO_PORT: 27017
+    MONGODB_PORT: process.env.MONGODB_PORT || 27017
 }
 
-mongoose.connect(`mongodb://localhost:${opts.MONGO_PORT}/users`, opts.MONGOOSE_OPTS)
+mongoose.connect(`mongodb://localhost:${opts.MONGODB_PORT}/users`, opts.MONGOOSE_OPTS)
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...'));
 
