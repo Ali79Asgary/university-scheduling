@@ -48,7 +48,7 @@ function validateUser(req, res) {
       firstName: Joi.string().min(3).max(255).required(),
       lastName: Joi.string().min(3).max(255).required(),
       password: Joi.string().min(6).max(1024).required(),
-      code: Joi.string().min(9).max(10).required(),
+      code: Joi.string().min(5).max(10).required(),
       rule: Joi.string().valid("Master", "Admin", "Student").required()
     });
 
