@@ -1,17 +1,15 @@
-OK, listen mate
+## Installing
 
-Go inside the repo folder
+Navigate into the repository folder, run the following command to install dependencies:
 
-then do this :
+```
+npm install . 
+```
 
-npm install . ( the DOT sign (.) indicates that we're in the current bloody directory OK ?? )
+## Starting The Server
 
-done
-
-now if you want to run it:
-
+Do not forget to have a Mongodb instance running on your server (Default port is 27017)
+run the following command to start a nodejs server running on port 3000
+```
 node .
-
-and don't forget to have a bloody mongodb instance running on your local computer
-
-best of luck (No)
+```
