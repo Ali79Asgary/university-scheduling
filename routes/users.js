@@ -1,22 +1,112 @@
-const {User, validate} = require('../models/user');
-const isAuthenticated = require('../middleware/isAuthenticated');
-const isAdmin = require('../middleware/isAdmin');
-const express = require('express');
-const bcrypt = require('bcrypt');
+const { User, validate } = require("../models/user");
+const isAuthenticated = require("../middleware/isAuthenticated");
+const isAdmin = require("../middleware/isAdmin");
+const express = require("express");
+const bcrypt = require("bcrypt");
 const router = express.Router();
 
 /*
     /api/users
 */
+router.get("/profile", isAuthenticated, async (req, res) => {
+    const foundUser = await User.findById(req.user._id);
 
-router.get('/:id', isAuthenticated, isAdmin, async (req, res) => {
-
-    const user = await User.findOne({code: req.params['id']}).catch(
-        res.status(404).json({
+    if (!foundUser)
+        return res.status(404).json({
             success: false,
-            message: "User doesnt exist."
-        })
-    );
+            message: "User doesnt exist.",
+        });
+
+
+    res.status(200).json({
+        success: true,
+        message: "User profile returned successfully.",
+        data: {
+            code: foundUser.code,
+            id: foundUser._id,
+            firstName: foundUser.firstName,
+            lastName: foundUser.lastName,
+            rule: foundUser.rule,
+        },
+    });
+});
+
+router.post("/profile", isAuthenticated, async (req, res) => {
+    const foundUser = await User.findById(req.user._id);
+
+    if (!foundUser)
+        return res.status(404).json({
+            success: false,
+            message: "User doesnt exist.",
+        });
+
+    const validPassword = await bcrypt.compare(req.body["password"], foundUser.password);
+
+    if (!validPassword)
+        return res.status(400).json({
+            success: false,
+            message: "User password doesnt match the entered current password.",
+        });
+
+    foundUser.firstName = req.body.firstName;
+    foundUser.lastName = req.body.lastName;
+
+
+    res.status(200).json({
+        success: true,
+        message: "Information are updated successfully.",
+        data: {
+            code: foundUser.code,
+            id: foundUser._id,
+            firstName: foundUser.firstName,
+            lastName: foundUser.lastName,
+            rule: foundUser.rule,
+        },
+    });
+});
+
+router.post("/profile/ChangePassword", isAuthenticated, async (req, res) => {
+    const user = await User.findById(req.user._id);
+
+    if (!user)
+        return res.status(404).json({
+            success: false,
+            message: "User doesnt exist.",
+        });
+
+    const validPassword = await bcrypt.compare(req.body["currentPassword"], user.password);
+
+    if (!validPassword)
+        return res.status(400).json({
+            success: false,
+            message: "User password doesnt match the entered current password.",
+        });
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(req.body["newPassword"], salt);
+    await user.save();
+
+    res.status(200).json({
+        success: true,
+        message: "Password is changed successfully.",
+        data: {
+            code: user.code,
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            rule: user.rule,
+        },
+    });
+});
+
+router.get("/:id", isAuthenticated, isAdmin, async (req, res) => {
+    const user = await User.findOne({ code: req.params["id"] });
+
+    if (!user)
+        return res.status(404).json({
+            success: false,
+            message: "User doesnt exist.",
+        });
 
     res.status(200).json({
         success: true,
@@ -26,20 +116,18 @@ router.get('/:id', isAuthenticated, isAdmin, async (req, res) => {
             id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
-            rule: user.rule
-        }
+            rule: user.rule,
+        },
     });
-
 });
 
-router.put('/:id', isAuthenticated, isAdmin, async (req, res) => {
-
-    const user = await User.findOne({code: req.params['id']}).catch(
-        res.status(404).json({
+router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
+    const user = await User.findOne({ code: req.params["id"] });
+    if (!user)
+        return res.status(404).json({
             success: false,
             message: "User doesnt exist.",
-        })
-    );
+        });
 
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
@@ -54,50 +142,54 @@ router.put('/:id', isAuthenticated, isAdmin, async (req, res) => {
             code: user.code,
             id: user._id,
             firstName: user.firstName,
-            lastName: user.lastName
-        }
+            lastName: user.lastName,
+        },
     });
-
 });
 
-router.delete('/:id', isAuthenticated, isAdmin, async (req, res) => {
+router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
+    const deletedUser = await User.findOneAndDelete({ code: req.params["id"] });
 
-    const deletedUser = await User.findOneAndDelete({code: req.params['id']}).catch(
-        res.status(404).json({
+    if (!deletedUser)
+        return res.status(404).json({
             success: false,
             message: "User doesnt exist.",
-        })
-    );
+        });
 
     res.status(200).json({
-        id: deletedUser._id,
-        firstName: deletedUser.firstName,
-        lastName: deletedUser.lastName,
-        code: deletedUser.code
-    });
+        success: true,
+        message: "User deleted successfully.",
+        data: {
+            id: deletedUser._id,
+            firstName: deletedUser.firstName,
+            lastName: deletedUser.lastName,
+            code: deletedUser.code,
+        }
 
+    });
 });
 
-router.post('/Add', isAuthenticated, isAdmin, async (req, res) => {
-
+router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
     const { error } = validate(req);
-    if (error) return res.status(400).json({
-        success: false,
-        message: error.details[0].message
-    });
+    if (error)
+        return res.status(400).json({
+            success: false,
+            message: error.details[0].message,
+        });
 
-    let user = await User.findOne({ code: req.body.code});
-    if (user) return res.status(400).json({
-        success: false,
-        message: 'User already registered.'
-    });
+    let user = await User.findOne({ code: req.body.code });
+    if (user)
+        return res.status(400).json({
+            success: false,
+            message: "User already registered.",
+        });
 
     user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         code: req.body.code,
         rule: req.body.rule,
-        password: req.body.password
+        password: req.body.password,
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -115,35 +207,34 @@ router.post('/Add', isAuthenticated, isAdmin, async (req, res) => {
             lastName: req.body.lastName,
             code: req.body.code,
             rule: req.body.rule,
-            id: user._id
-        }
+            id: user._id,
+        },
     });
-
 });
 
-
-router.post('/AddList', isAuthenticated, isAdmin, async (req, res) => {
-
+router.post("/AddList", isAuthenticated, isAdmin, async (req, res) => {
     const response = [];
     for (let u of req.body) {
-        const {error} = validate(u);
-        if (error) return res.status(400).json({
-            success: false,
-            message: error.details[0].message
-        });
+        const { error } = validate(u);
+        if (error)
+            return res.status(400).json({
+                success: false,
+                message: error.details[0].message,
+            });
 
-        let user = await User.findOne({code: u.code});
-        if (user) return res.status(400).json({
-            success: false,
-            message: 'User already registered.'
-        });
+        let user = await User.findOne({ code: u.code });
+        if (user)
+            return res.status(400).json({
+                success: false,
+                message: "User already registered.",
+            });
 
         user = new User({
             firstName: u.firstName,
             lastName: u.lastName,
             code: u.code,
             rule: u.rule,
-            password: u.password
+            password: u.password,
         });
 
         const salt = await bcrypt.genSalt(10);
@@ -156,15 +247,14 @@ router.post('/AddList', isAuthenticated, isAdmin, async (req, res) => {
             lastName: user.lastName,
             code: user.code,
             rule: user.rule,
-            id: user._id
+            id: user._id,
         });
     }
     res.status(200).json({
-        message: 'Users are created successfully.',
+        message: "Users are created successfully.",
         success: true,
-        data: response
+        data: response,
     });
-
 });
 
- module.exports = router;
+module.exports = router;
