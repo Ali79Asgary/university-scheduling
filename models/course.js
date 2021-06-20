@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const {timeTableSchema} = require('./timeTable');
-const {masterSchema} = require('./master');
 
 const courseSchema = new mongoose.Schema({
     title: {
@@ -12,10 +10,12 @@ const courseSchema = new mongoose.Schema({
         required: true
     },
     masters: {
-        type: [masterSchema],
+        type: [mongoose.Types.ObjectId],
+        ref: 'Master'
     },
     timeTables:  {
-        type: [timeTableSchema],
+        type: [mongoose.Types.ObjectId],
+        ref: 'TimeTable'
     }
 });
 

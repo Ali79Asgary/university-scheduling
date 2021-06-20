@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const {timeTableSchema} = require('./timeTable')
 
 const announcementSchema = new mongoose.Schema({
     timetable: {
-        type: timeTableSchema,
+        type: mongoose.Types.ObjectId,
+        ref: 'TimeTable',
         required: true
     },
     message:  {
