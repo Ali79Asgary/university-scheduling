@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
-const {userSchema} = require('./user');
-const {timeTableSchema} = require('./timeTable')
 
 const studentSchema = new mongoose.Schema({
     user: {
-        type: userSchema,
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     timeTables:  {
-        type: [timeTableSchema],
+        type: [mongoose.Types.ObjectId],
+        ref: 'TimeTable'
     }
 });
 

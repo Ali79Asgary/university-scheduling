@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const {userSchema} = require('./user');
 
 const adminSchema = new mongoose.Schema({
     user: {
-        type: userSchema,
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
         required: true
     },
 });
