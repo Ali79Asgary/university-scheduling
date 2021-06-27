@@ -169,6 +169,9 @@ router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
     });
 });
 
+/*
+    Add user to database
+*/
 router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
     const { error } = validate(req);
     if (error)

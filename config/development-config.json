@@ -6,5 +6,13 @@
     },
     "MONGODB_PORT": 27017,
     "MONGODB_DB_NAME": "uni",
-    "MONGODB_HOST": "localhost"
+    "MONGODB_HOST": "localhost",
+    "MONGODB_TEST_DB_NAME": "JestDB",
+    "TEST_ADMIN_CREDS" : { 
+        "firstName" : "System", 
+        "lastName" : "Administrator", 
+        "code" : "admin", 
+        "rule" : "Admin", 
+        "password" : "adminadmin" 
+    }
 }

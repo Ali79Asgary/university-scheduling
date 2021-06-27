@@ -15,13 +15,17 @@ config.MONGODB_PORT = process.env.MONGODB_PORT || config.MONGODB_PORT
 /*
     Connect to database using the credentials defined in config/{development/production}-config.json file
 */
-mongoose.connect(`mongodb://${config.MONGODB_HOST}:${config.MONGODB_PORT}/${config.MONGODB_DB_NAME}`, config.MONGOOSE_config)
+mongoose.connect(`mongodb://${config.MONGODB_HOST}:${config.MONGODB_PORT}/${config.MONGODB_DB_NAME}`, 
+    config.MONGOOSE_config)
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...'));
 
 /*
-    Start the express application and beggin listening for connection
+    Start the express application and begin listening for connection
 */
-app.listen(config.NODE_APP_PORT, () => console.log(`Listening on port ${config.NODE_APP_PORT}...`));
+app.listen(
+    config.NODE_APP_PORT, 
+    () => console.log(`Listening on port ${config.NODE_APP_PORT}...`)
+);
 
 module.exports = app
