@@ -1,4 +1,7 @@
 const { User, validate } = require("../models/user");
+const { Student } = require("../models/student");
+const { Admin } = require("../models/admin");
+const { Master } = require("../models/master");
 const isAuthenticated = require("../middleware/isAuthenticated");
 const isAdmin = require("../middleware/isAdmin");
 const express = require("express");
@@ -197,11 +200,41 @@ router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
 
     await user.save();
 
-    const token = user.generateAuthToken();
+    let rule_message = '';
+
+    switch (user.rule) {
+        case "Student":
+            const student = new Student({
+                user: user._id,
+                timeTables: [],
+            });
+            rule_message = "Student";
+            await student.save();
+            break;
+
+        case "Master":
+            const master = new Master({
+                user: user._id,
+                timeTables: [],
+                timeTableBells: [],
+                courses: [],
+            });
+            rule_message = "Master";
+            await master.save();
+            break;
+
+        case "Admin":
+            const admin = new Admin({
+                user: user._id
+            });
+            rule_message = "Admin";
+            await admin.save();
+            break;
+    }
 
     res.status(200).json({
         success: true,
-        message: "User created successfully.",
+        message: `${rule_message} created successfully.`,
         data: {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -241,6 +274,33 @@ router.post("/AddList", isAuthenticated, isAdmin, async (req, res) => {
         user.password = await bcrypt.hash(user.password, salt);
 
         await user.save();
+
+        switch (user.rule) {
+            case "Student":
+                const student = new Student({
+                    user: user._id,
+                    timeTables: [],
+                });
+                await student.save();
+                break;
+
+            case "Master":
+                const master = new Master({
+                    user: user._id,
+                    timeTables: [],
+                    timeTableBells: [],
+                    courses: [],
+                });
+                await master.save();
+                break;
+
+            case "Admin":
+                const admin = new Admin({
+                    user: user._id,
+                });
+                await admin.save();
+                break;
+        }
 
         response.push({
             firstName: user.firstName,
