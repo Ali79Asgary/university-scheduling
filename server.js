@@ -1,21 +1,27 @@
 const mongoose = require('mongoose');
 const app = require('./app')
 
-const opts = {
-    APP_PORT: process.env.PORT || 3000,
-    MONGOOSE_OPTS: { 
-        useNewUrlParser: true, 
-        useUnifiedTopology: true 
-    },
-    MONGODB_PORT: process.env.MONGODB_PORT || 27017,
-    MONGODB_DB_NAME: "uni",
-    MONGODB_HOST: "localhost"
-}
+/*
+    Loading configuration variables e.g
+*/
+const config = require('./config/development-config.json')
 
-mongoose.connect(`mongodb://${opts.MONGODB_HOST}:${opts.MONGODB_PORT}/${opts.MONGODB_DB_NAME}`, opts.MONGOOSE_OPTS)
+/*
+    Check for configuration variables that are defined as environment variables
+*/
+config.NODE_APP_PORT = process.env.NODE_APP_PORT || config.NODE_APP_PORT
+config.MONGODB_PORT = process.env.MONGODB_PORT || config.MONGODB_PORT
+
+/*
+    Connect to database using the credentials defined in config/{development/production}-config.json file
+*/
+mongoose.connect(`mongodb://${config.MONGODB_HOST}:${config.MONGODB_PORT}/${config.MONGODB_DB_NAME}`, config.MONGOOSE_config)
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...'));
 
-app.listen(opts.APP_PORT, () => console.log(`Listening on port ${opts.APP_PORT}...`));
+/*
+    Start the express application and beggin listening for connection
+*/
+app.listen(config.NODE_APP_PORT, () => console.log(`Listening on port ${config.NODE_APP_PORT}...`));
 
 module.exports = app

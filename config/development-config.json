@@ -1,0 +1,10 @@
+{
+    "NODE_APP_PORT": 3000,
+    "MONGOOSE_config": { 
+        "useNewUrlParser": true, 
+        "useUnifiedTopology": true 
+    },
+    "MONGODB_PORT": 27017,
+    "MONGODB_DB_NAME": "uni",
+    "MONGODB_HOST": "localhost"
+}
