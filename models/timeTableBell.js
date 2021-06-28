@@ -10,10 +10,6 @@ const timeTableBellSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Bell',
         required: true
-    },
-    timeTable: {
-        type: mongoose.Types.ObjectId,
-        ref: 'TimeTable'
     }
 });
 
