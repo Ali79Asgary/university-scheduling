@@ -11,6 +11,45 @@ const router = express.Router();
 /*
     /api/users
 */
+router.get("/", isAuthenticated, isAdmin, async (req, res) => {
+    const criteria = {
+        $or: [
+            { firstName: { $regex: `${req.query["search"]}`, $options: "i" } },
+            { lastName: { $regex: `${req.query["search"]}`, $options: "i" } },
+        ],
+    };
+
+    const foundUsers = await User.find(criteria);
+
+    if (foundUsers.length === 0)
+        return res.status(404).json({
+            success: false,
+            message: "Users doesnt exist.",
+        });
+
+    const response = [];
+
+    for (const foundUser of foundUsers)
+        response.push({
+            code: foundUser._doc.code,
+            id: foundUser._doc._id,
+            firstName: foundUser._doc.firstName,
+            lastName: foundUser._doc.lastName,
+            rule: foundUser._doc.rule,
+        });
+
+    res.status(200).json({
+        success: true,
+        message: "Users returned successfully.",
+        data: {
+            list: response,
+            count: foundUsers.length,
+            Page: req.query["Page"],
+            totalPages: count / req.query["PageSize"],
+        },
+    });
+});
+
 router.get("/profile", isAuthenticated, async (req, res) => {
     const foundUser = await User.findById(req.user._id);
 
