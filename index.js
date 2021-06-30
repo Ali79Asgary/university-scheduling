@@ -2,6 +2,7 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+const courses = require('./routes/course')
 const express = require('express');
 const app = express();
 
@@ -22,6 +23,7 @@ mongoose.connect(`mongodb://${opts.MONGODB_HOST}:${opts.MONGODB_PORT}/${opts.MON
 app.use(express.json());
 app.use('/api/Users', users);
 app.use('/api/Auth', auth);
+app.use('/api/Courses', courses);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
