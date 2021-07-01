@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 
 /*
-    /api/users
+    /api/Users
 */
 router.get("/profile", isAuthenticated, async (req, res) => {
     const foundUser = await User.findById(req.user._id);

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const app = require('./app')
 
 /*
-    Loading configuration variables e.g
+    Loading configuration variables e.g DB port
 */
 const config = require('./config/development-config.json')
 
