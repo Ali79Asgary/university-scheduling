@@ -2,13 +2,14 @@ const { Day } = require('../models/day')
 const isAuthenticated = require("../middleware/isAuthenticated");
 const isAdmin = require("../middleware/isAdmin");
 const express = require("express");
+const { date } = require('joi');
 const router = express.Router();
 
 /*
     /api/Days
 */
 
-/* Needs isAuthenticated, isAdmin */
+
 router.get("/", isAuthenticated, isAdmin, async (req, res) => {
 
     const listOfDays = [];
@@ -32,7 +33,7 @@ router.get("/", isAuthenticated, isAdmin, async (req, res) => {
     });
 });
 
-/* Needs isAuthenticated, isAdmin */
+
 router.post("/", isAuthenticated, isAdmin, async (req, res) => {
 
     const day = new Day({
@@ -48,6 +49,70 @@ router.post("/", isAuthenticated, isAdmin, async (req, res) => {
         label: day.label,
         dayOfWeek: day.dayOfWeek
     });
+});
+
+router.get("/:id", isAuthenticated, isAdmin, async (req, res) => {
+    const day = await Day.findOne({ _id: req.params["id"] });
+
+    if (!day)
+        return res.status(404).json({
+            success: false,
+            message: "Day not found.",
+        });
+    
+    res.status(200).json(
+        {
+            id: day._id,
+            label: day.label,
+            dayOfWeek: day.dayOfWeek
+
+        });
+});
+
+router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
+    const day = await Day.findOne({ _id: req.params["id"] });
+
+    if (!day)
+        return res.status(404).json({
+            success: false,
+            message: "Day not found.",
+        });
+
+    day.label = req.body.label;
+    day.dayOfWeek =  req.body.dayOfWeek;
+
+    await day.save();
+
+    res.status(200).json(
+        {
+            success: true,
+            message: "Day updated successfully.",
+            data: {
+                id: day._id,
+                label: day.label,
+                dayOfWeek: day.dayOfWeek
+            }
+        });
+});
+
+router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
+    const day = await Day.findOneAndDelete({ _id: req.params["id"] });
+
+    if (!day)
+        return res.status(404).json({
+            success: false,
+            message: "Day not found.",
+        });
+    
+    res.status(200).json({
+        success: true,
+        message: "Day deleted successfully.",
+        data: {
+            id: day._id,
+            label: day.label,
+            dayOfWeek: day.dayOfWeek
+        }
+    })
 });
 
 
