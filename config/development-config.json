@@ -14,5 +14,14 @@
         "code" : "admin", 
         "rule" : "Admin", 
         "password" : "adminadmin" 
+    },
+    "STATUS" : {
+        "SUCCESS" : "success",
+        "ERROR" : "error"
+    },
+    "HTTP" : {
+        "BAD_REQUEST" : 400,
+        "NOT_FOUND" : 404,
+        "OK" : 200
     }
 }
