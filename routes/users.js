@@ -1,7 +1,7 @@
-const { User, validate } = require("../models/user");
-const { Student } = require("../models/student");
-const { Admin } = require("../models/admin");
-const { Master } = require("../models/master");
+const {User, validate} = require("../models/user");
+const {Student} = require("../models/student");
+const {Admin} = require("../models/admin");
+const {Master} = require("../models/master");
 const isAuthenticated = require("../middleware/isAuthenticated");
 const isAdmin = require("../middleware/isAdmin");
 const express = require("express");
@@ -14,8 +14,8 @@ const router = express.Router();
 router.get("/", isAuthenticated, isAdmin, async (req, res) => {
     const criteria = {
         $or: [
-            { firstName: { $regex: `${req.query["search"]}`, $options: "i" } },
-            { lastName: { $regex: `${req.query["search"]}`, $options: "i" } },
+            {firstName: {$regex: `${req.query['search']}`, $options: "i"}},
+            {lastName: {$regex: `${req.query['search']}`, $options: "i"}},
         ],
     };
 
@@ -27,6 +27,7 @@ router.get("/", isAuthenticated, isAdmin, async (req, res) => {
             message: "Users doesnt exist.",
         });
 
+
     const response = [];
 
     for (const foundUser of foundUsers)
@@ -35,8 +36,9 @@ router.get("/", isAuthenticated, isAdmin, async (req, res) => {
             id: foundUser._doc._id,
             firstName: foundUser._doc.firstName,
             lastName: foundUser._doc.lastName,
-            rule: foundUser._doc.rule,
+            rule: foundUser._doc.rule
         });
+
 
     res.status(200).json({
         success: true,
@@ -44,10 +46,12 @@ router.get("/", isAuthenticated, isAdmin, async (req, res) => {
         data: {
             list: response,
             count: foundUsers.length,
-            Page: req.query["Page"],
-            totalPages: count / req.query["PageSize"],
-        },
+            Page: req.query['Page'],
+            totalPages: count / req.query['PageSize']
+        }
+
     });
+
 });
 
 router.get("/profile", isAuthenticated, async (req, res) => {
@@ -58,7 +62,6 @@ router.get("/profile", isAuthenticated, async (req, res) => {
             success: false,
             message: "User doesnt exist.",
         });
-
 
     res.status(200).json({
         success: true,
@@ -82,17 +85,8 @@ router.post("/profile", isAuthenticated, async (req, res) => {
             message: "User doesnt exist.",
         });
 
-    const validPassword = await bcrypt.compare(req.body["password"], foundUser.password);
-
-    if (!validPassword)
-        return res.status(400).json({
-            success: false,
-            message: "User password doesnt match the entered current password.",
-        });
-
     foundUser.firstName = req.body.firstName;
     foundUser.lastName = req.body.lastName;
-
 
     res.status(200).json({
         success: true,
@@ -116,7 +110,10 @@ router.post("/profile/ChangePassword", isAuthenticated, async (req, res) => {
             message: "User doesnt exist.",
         });
 
-    const validPassword = await bcrypt.compare(req.body["currentPassword"], user.password);
+    const validPassword = await bcrypt.compare(
+        req.body["currentPassword"],
+        user.password
+    );
 
     if (!validPassword)
         return res.status(400).json({
@@ -142,7 +139,7 @@ router.post("/profile/ChangePassword", isAuthenticated, async (req, res) => {
 });
 
 router.get("/:id", isAuthenticated, isAdmin, async (req, res) => {
-    const user = await User.findOne({ code: req.params["id"] });
+    const user = await User.findOne({code: req.params["id"]});
 
     if (!user)
         return res.status(404).json({
@@ -164,7 +161,7 @@ router.get("/:id", isAuthenticated, isAdmin, async (req, res) => {
 });
 
 router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
-    const user = await User.findOne({ code: req.params["id"] });
+    const user = await User.findOne({code: req.params["id"]});
     if (!user)
         return res.status(404).json({
             success: false,
@@ -190,7 +187,7 @@ router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
 });
 
 router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
-    const deletedUser = await User.findOneAndDelete({ code: req.params["id"] });
+    const deletedUser = await User.findOneAndDelete({code: req.params["id"]});
 
     if (!deletedUser)
         return res.status(404).json({
@@ -206,23 +203,19 @@ router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
             firstName: deletedUser.firstName,
             lastName: deletedUser.lastName,
             code: deletedUser.code,
-        }
-
+        },
     });
 });
 
-/*
-    Add user to database
-*/
 router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
-    const { error } = validate(req);
+    const {error} = validate(req);
     if (error)
         return res.status(400).json({
             success: false,
             message: error.details[0].message,
         });
 
-    let user = await User.findOne({ code: req.body.code });
+    let user = await User.findOne({code: req.body.code});
     if (user)
         return res.status(400).json({
             success: false,
@@ -242,7 +235,7 @@ router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
 
     await user.save();
 
-    let rule_message = '';
+    let rule_message = "";
 
     switch (user.rule) {
         case "Student":
@@ -267,7 +260,7 @@ router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
 
         case "Admin":
             const admin = new Admin({
-                user: user._id
+                user: user._id,
             });
             rule_message = "Admin";
             await admin.save();
@@ -290,14 +283,14 @@ router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
 router.post("/AddList", isAuthenticated, isAdmin, async (req, res) => {
     const response = [];
     for (let u of req.body) {
-        const { error } = validate(u);
+        const {error} = validate(u);
         if (error)
             return res.status(400).json({
                 success: false,
                 message: error.details[0].message,
             });
 
-        let user = await User.findOne({ code: u.code });
+        let user = await User.findOne({code: u.code});
         if (user)
             return res.status(400).json({
                 success: false,
