@@ -2,6 +2,7 @@ const express = require('express');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const courses = require('./routes/course')
+const timeTableBells = require('./routes/timeTableBells')
 const app = express();
 
 /*
@@ -15,5 +16,6 @@ app.use(express.json());
 app.use('/api/Users', users);
 app.use('/api/Auth', auth);
 app.use('/api/Courses', courses);
+app.use('/api/TimeTableBells', timeTableBells)
 
 module.exports = app

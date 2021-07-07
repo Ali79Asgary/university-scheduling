@@ -14,5 +14,26 @@
         "code" : "admin", 
         "rule" : "Admin", 
         "password" : "adminadmin" 
+    },
+    "STATUS" : {
+        "SUCCESS" : "success",
+        "ERROR" : "error"
+    },
+    "HTTP" : {
+        "BAD_REQUEST" : 400,
+        "NOT_FOUND" : 404,
+        "OK" : 200,
+        "INTERNAL_SERVER_ERROR" : 500
+    },
+    "MODELS": {
+        "TIME_TABLE_BELL": {
+            "FIELDS": "id Bell Day"
+        },
+        "DAY": {
+            "FIELDS": "id label dayOfWeek"
+        },
+        "BELL": {
+            "FIELDS": "id label bellOfDay"
+        }
     }
 }
