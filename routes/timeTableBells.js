@@ -69,7 +69,7 @@ router.get("/", isAuthenticated, isAdminOrMaster, async (req, res) => {
                 data: {
                     list : trimmedList,
                     page : req.query.Page,
-                    count : req.query.PageSize,
+                    count: trimmedList.length,
                     totalPages : totalNumberOfPages
                 }         
             });
@@ -115,7 +115,7 @@ router.get("/", isAuthenticated, isAdminOrMaster, async (req, res) => {
                 data: {
                     list : trimmedList,
                     page : req.query.Page,
-                    count : req.query.PageSize,
+                    count: trimmedList.length,
                     totalPages : totalNumberOfPages
                 }         
             });

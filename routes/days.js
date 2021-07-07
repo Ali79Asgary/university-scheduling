@@ -38,7 +38,7 @@ router.get("/", isAuthenticated, async (req, res) => {
         message: "list of days",
         data : {
             list: trimmedList,
-            count: req.query.PageSize,
+            count: trimmedList.length,
             page: req.query.Page,
             totalPages: totalNumberOfPages
         }
