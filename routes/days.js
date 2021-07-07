@@ -34,11 +34,11 @@ router.get("/", isAuthenticated, async (req, res) => {
 
     res.status(config.HTTP.OK).json(
     {  
-        status: config.STATUS.SUCCESS,
-        message: null,
+        success : true,
+        message: "list of days",
         data : {
             list: trimmedList,
-            pageSize: req.query.PageSize,
+            count: req.query.PageSize,
             page: req.query.Page,
             totalPages: totalNumberOfPages
         }
@@ -51,21 +51,21 @@ router.get("/:id", isAuthenticated, async (req, res) => {
     const day = await Day.findOne({ _id: req.params["id"] }, err => {
         if(err) /* TODO: This is a naive solution for handling input validation, but works, CHANGE LATER*/
             return res.status(config.HTTP.NOT_FOUND).json({
-                status: config.STATUS.ERROR,
+                success: false,
                 message: "Day not found.",
             });
     });
 
     if (!day)
         return res.status(config.HTTP.NOT_FOUND).json({
-            status: config.STATUS.ERROR,
+            sucess: false,
             message: "Day not found.",
         });
     
     res.status(config.HTTP.OK).json(
         {
-            status : config.STATUS.SUCCESS,
-            message : null,
+            success: true,
+            message : "retrieved day by id",
             data : {
                 id: day._id,
                 label: day.label,
@@ -82,7 +82,7 @@ router.post("/", isAuthenticated, isAdmin, async (req, res) => {
     if(exists){
         return res.status(config.HTTP.BAD_REQUEST).json(
             {
-                status : config.STATUS.ERROR,
+                success: false,
                 message : "Day already exists.",
             });
     }
@@ -96,8 +96,8 @@ router.post("/", isAuthenticated, isAdmin, async (req, res) => {
 
     res.status(config.HTTP.OK).json(
         {
-            status : config.STATUS.SUCCESS,
-            message : null,
+            success: true,
+            message : "day created successfully",
             data : {
                 id: day._id,
                 label: day.label,
@@ -115,7 +115,7 @@ router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
 
     if (!day) /* Checking if day already exists */
         return res.status(config.HTTP.NOT_FOUND).json({
-            status: config.STATUS.ERROR,
+            success: false,
             message: "Day not found.",
         });
 
@@ -126,7 +126,7 @@ router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
 
     res.status(config.HTTP.OK).json(
         {
-            status: config.STATUS.SUCCESS,
+            success: true,
             message: "Day updated successfully.",
             data: {
                 id: day._id,
@@ -147,7 +147,7 @@ router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
         });
     
     res.status(config.HTTP.OK).json({
-        status: config.STATUS.SUCCESS,
+        success: true,
         message: "Day deleted successfully.",
         data: {
             id: day._id,
