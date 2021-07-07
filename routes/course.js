@@ -19,7 +19,7 @@ function splitArrayIntoChunksOfLen(arr, len) {
   }
 
 
-  router.get('/', isAuthenticated, isAdmin, async (req, res) => {
+router.get('/', isAuthenticated, isAdmin, async (req, res) => {
     const criteria = {$and: [
         {title: {$regex: `/${req.body.search}/`, $options: 'i'}},
         {unitCounts: req.body.unitCount}
@@ -65,6 +65,7 @@ router.post('/', isAuthenticated, isAdmin, async (req, res) => {
         title: req.body.title,
         unitCounts: req.body.unitsCounts
     })
+    //TODO : Check for existing courses with the same title
     await newCourse.save(function(err, result){
         if(err){
             return res.status(404).json({

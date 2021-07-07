@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 
 /*
-    /api/users
+    /api/Users
 */
 router.get("/", isAuthenticated, isAdmin, async (req, res) => {
     const criteria = {
