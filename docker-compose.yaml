@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    image: smileahappysmile/university-scheduling
+    ports:
+      - 80:8080
+    environment:
+        NODE_APP_PORT: 8080
+        MONGODB_HOST: "mongodatabase1"
+    depends_on:
+      - mongo
+  mongo:
+    image: clusterhq/mongodb
+    container_name: "mongodatabase1"
+    ports:
+    - "27017:27017"

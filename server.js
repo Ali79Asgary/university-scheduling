@@ -11,6 +11,7 @@ const config = require('./config/development-config.json')
 */
 config.NODE_APP_PORT = process.env.NODE_APP_PORT || config.NODE_APP_PORT
 config.MONGODB_PORT = process.env.MONGODB_PORT || config.MONGODB_PORT
+config.MONGODB_HOST = process.env.MONGODB_HOST || config.MONGODB_HOST
 
 /*
     Connect to database using the credentials defined in config/{development/production}-config.json file
