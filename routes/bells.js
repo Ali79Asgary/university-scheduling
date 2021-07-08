@@ -24,7 +24,7 @@ router.get('/', isAuthenticated, async(req, res) => {
         message: "list of bells",
         data: {
             list: trimmedList,
-            pageSize: parseInt(req.query.PageSize),
+            count: trimmedList.length,
             page: parseInt(req.query.Page),
             totalPages: totalPagesCount
         }
