@@ -26,6 +26,6 @@ app.use('/api/Days', days);
 /*
     Adding swagger UI
 */
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument) );
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument) );
 
 module.exports = app
