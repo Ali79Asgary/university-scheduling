@@ -1,0 +1,1 @@
+mkdir -p /data/db /data/nginx /data/certbot/wwww /data/certbot/conf

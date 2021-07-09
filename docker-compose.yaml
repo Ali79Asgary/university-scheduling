@@ -2,7 +2,6 @@ version: '3'
 services:
   web:
     image: smileahappysmile/university-scheduling
-    build: .
     deploy:
       replicas: 4
       restart_policy:
@@ -33,20 +32,29 @@ services:
     networks: 
       - balance
     volumes:
-      - /data:/data/db
+      - /data/db:/data/db
       - ./db/init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
   proxy:
-    image: smileahappysmile/nginx-balancer-docker
+    image: nginx:1.15-alpine
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - web
     deploy:
       placement:
         constraints: [node.role == manager]
+    volumes:
+      - /data/nginx:/etc/nginx/conf.d
+      - /data/certbot/conf:/etc/letsencrypt
+      - /data/certbot/www:/var/www/certbot
     networks: 
       - balance
-
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - /data/certbot/conf:/etc/letsencrypt
+      - /data/certbot/www:/var/www/certbot
 networks:
   balance:
     driver: overlay
