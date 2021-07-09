@@ -1,0 +1,2088 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "AlgorithemFinal",
+      "version": "v1"
+    },
+    "paths": {
+      "/api/Announcements": {
+        "get": {
+          "tags": [
+            "Announcements"
+          ],
+          "parameters": [
+            {
+              "name": "MasterId",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            },
+            {
+              "name": "TimeTableId",
+              "in": "query",
+              "schema": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            },
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AnnouncementPaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Announcements"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnouncementRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnouncementRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnnouncementRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Announcement"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Announcements/{id}": {
+        "get": {
+          "tags": [
+            "Announcements"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Announcement"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Announcements"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Auth/Login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Bells": {
+        "get": {
+          "tags": [
+            "Bells"
+          ],
+          "parameters": [
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BellPaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Bells"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BellRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BellRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BellRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Bell"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Bells/{id}": {
+        "get": {
+          "tags": [
+            "Bells"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Bell"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Bells"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BellRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BellRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BellRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Bells"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Courses": {
+        "get": {
+          "tags": [
+            "Courses"
+          ],
+          "summary": "",
+          "parameters": [
+            {
+              "name": "search",
+              "in": "query",
+              "description": "قسمتی از نام",
+              "schema": {
+                "type": "string",
+                "description": "قسمتی از نام",
+                "nullable": true
+              }
+            },
+            {
+              "name": "unitCount",
+              "in": "query",
+              "description": "تعداد واحد",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد واحد",
+                "format": "int32",
+                "nullable": true
+              }
+            },
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CoursePaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Courses"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Course"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Courses/{id}": {
+        "get": {
+          "tags": [
+            "Courses"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Course"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Courses"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Courses"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Courses/{id}/TimeTables": {
+        "get": {
+          "tags": [
+            "Courses"
+          ],
+          "summary": "برنامه زمانی درس هایی که این شناسه را دارند را برمیگرداند.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "شناسه",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "description": "شناسه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TimeTablePaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Courses/{id}/Masters": {
+        "get": {
+          "tags": [
+            "Courses"
+          ],
+          "summary": "استاد های درس با شناسه وارد شده را بر می پرداند",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "شناسه",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "description": "شناسه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/MasterPaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Courses/{id}/Choose": {
+        "post": {
+          "tags": [
+            "Courses"
+          ],
+          "summary": "استاد درس را برای ارایه انتخاب می کند. لازم که استاد را از طریق میدل ویر شناسایی کنید و از روی توکن",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "شناسه درس",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "description": "شناسه درس",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Days": {
+        "get": {
+          "tags": [
+            "Days"
+          ],
+          "parameters": [
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DayPaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Days"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Day"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Days/{id}": {
+        "get": {
+          "tags": [
+            "Days"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Day"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Days"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Days"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/TimeTableBells": {
+        "get": {
+          "tags": [
+            "TimeTableBells"
+          ],
+          "parameters": [
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TimeTableBellPaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "TimeTableBells"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTableBellRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTableBellRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeTableBellRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TimeTableBell"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/TimeTableBells/{id}": {
+        "get": {
+          "tags": [
+            "TimeTableBells"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TimeTableBell"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "TimeTableBells"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/TimeTables": {
+        "get": {
+          "tags": [
+            "TimeTables"
+          ],
+          "summary": "",
+          "parameters": [
+            {
+              "name": "StudentId",
+              "in": "query",
+              "description": "شناسه دانشجو",
+              "schema": {
+                "type": "integer",
+                "description": "شناسه دانشجو",
+                "format": "int32",
+                "nullable": true
+              }
+            },
+            {
+              "name": "CourseId",
+              "in": "query",
+              "description": "شناسه درس",
+              "schema": {
+                "type": "integer",
+                "description": "شناسه درس",
+                "format": "int32",
+                "nullable": true
+              }
+            },
+            {
+              "name": "MasterId",
+              "in": "query",
+              "description": "شناسه استاد",
+              "schema": {
+                "type": "integer",
+                "description": "شناسه استاد",
+                "format": "int32",
+                "nullable": true
+              }
+            },
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TimeTablePaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/TimeTables/{id}": {
+        "get": {
+          "tags": [
+            "TimeTables"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TimeTableDeatilsResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/TimeTables/{id}/Choose": {
+        "post": {
+          "tags": [
+            "TimeTables"
+          ],
+          "summary": "دانشجو درس را برای ارایه انتخاب می کند. لازم که دانشجو را از طریق میدل ویر شناسایی کنید و از روی توکن",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/TimeTables/StartProcess": {
+        "post": {
+          "tags": [
+            "TimeTables"
+          ],
+          "summary": "شروع به اجرای الگوریتم می کند.",
+          "parameters": [
+            {
+              "name": "maxClassPerBell",
+              "in": "query",
+              "description": "تعداد کلاس های کوجود",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد کلاس های کوجود",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Users": {
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "",
+          "parameters": [
+            {
+              "name": "search",
+              "in": "query",
+              "description": "جستجو بر اساس نام کاربر (FirstName + LastName)",
+              "schema": {
+                "type": "string",
+                "description": "جستجو بر اساس نام کاربر (FirstName + LastName)",
+                "nullable": true
+              }
+            },
+            {
+              "name": "PageSize",
+              "in": "query",
+              "description": "تعداد آیتم های موجود در صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "تعداد آیتم های موجود در صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "Page",
+              "in": "query",
+              "description": "شماره صفحه",
+              "schema": {
+                "type": "integer",
+                "description": "شماره صفحه",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "userType",
+              "in": "query",
+              "description": "نوع کاربر : [\"master\", \"student\"]",
+              "schema": {
+                "type": "string",
+                "description": "نوع کاربر : [\"master\", \"student\"]",
+                "nullable": true
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserPaginatedResult"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Users/{id}": {
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditUserRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditUserRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EditUserRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Users/Profile": {
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "دیدن پروفایل شخص لاگین شده بدون شناسه",
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "ویرایش کردن پروفایل شخص لاگین شده بدون گرفتن شناسه",
+          "requestBody": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Users/Profile/ChangePassword": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "برای عوض کردن رمز عبور کاربر",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfilePasswordRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfilePasswordRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfilePasswordRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success"
+            }
+          }
+        }
+      },
+      "/api/Users/Add": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "برای اضافه کردن کاربر به صورت تکی",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddUserRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddUserRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddUserRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/Users/AddList": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "برای اضافه کردن کاربر به صورت گروهی",
+          "requestBody": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddUserRequest"
+                  },
+                  "description": "",
+                  "nullable": true
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddUserRequest"
+                  },
+                  "description": "",
+                  "nullable": true
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddUserRequest"
+                  },
+                  "description": "",
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "required": [
+            "code"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "lastName": {
+              "type": "string",
+              "nullable": true
+            },
+            "firstName": {
+              "type": "string",
+              "nullable": true
+            },
+            "code": {
+              "type": "string",
+              "description": "نام کاربری یا همان شماره دانشجویی"
+            },
+            "role": {
+              "type": "string",
+              "description": "master | admin | student",
+              "nullable": true,
+              "readOnly": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "Master": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "userId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "user": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "additionalProperties": false
+        },
+        "Day": {
+          "required": [
+            "label"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "label": {
+              "type": "string"
+            },
+            "dayOfWeek": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "Bell": {
+          "required": [
+            "label"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "label": {
+              "type": "string"
+            },
+            "bellOfDay": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "TimeTableBell": {
+          "required": [
+            "bell",
+            "day"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "day": {
+              "$ref": "#/components/schemas/Day"
+            },
+            "bell": {
+              "$ref": "#/components/schemas/Bell"
+            }
+          },
+          "additionalProperties": false
+        },
+        "Course": {
+          "required": [
+            "title"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "title": {
+              "type": "string"
+            },
+            "unitsCount": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "TimeTable": {
+          "required": [
+            "course"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "master": {
+              "$ref": "#/components/schemas/Master"
+            },
+            "timeTableBells": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TimeTableBell"
+              },
+              "nullable": true
+            },
+            "course": {
+              "$ref": "#/components/schemas/Course"
+            }
+          },
+          "additionalProperties": false
+        },
+        "Announcement": {
+          "required": [
+            "message",
+            "timeTable",
+            "timeTableId"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "timeTableId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "timeTable": {
+              "$ref": "#/components/schemas/TimeTable"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "AnnouncementPaginatedResult": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Announcement"
+              },
+              "nullable": true
+            },
+            "count": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "page": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "AnnouncementRequest": {
+          "required": [
+            "message",
+            "timeTableId"
+          ],
+          "type": "object",
+          "properties": {
+            "timeTableId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "AuthRequest": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "nullable": true
+            },
+            "password": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "AuthResponse": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "nullable": true
+            },
+            "expireAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "user": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "additionalProperties": false
+        },
+        "BellPaginatedResult": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Bell"
+              },
+              "nullable": true
+            },
+            "count": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "page": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "BellRequest": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "nullable": true
+            },
+            "bellOfDay": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "CoursePaginatedResult": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Course"
+              },
+              "nullable": true
+            },
+            "count": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "page": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "CourseRequest": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "nullable": true
+            },
+            "unitsCount": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "TimeTablePaginatedResult": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TimeTable"
+              },
+              "nullable": true
+            },
+            "count": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "page": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "MasterPaginatedResult": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Master"
+              },
+              "nullable": true
+            },
+            "count": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "page": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "DayPaginatedResult": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Day"
+              },
+              "nullable": true
+            },
+            "count": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "page": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "DayRequest": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "nullable": true
+            },
+            "dayOfWeek": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "TimeTableBellPaginatedResult": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TimeTableBell"
+              },
+              "nullable": true
+            },
+            "count": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "page": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "TimeTableBellRequest": {
+          "required": [
+            "bellId",
+            "dayId"
+          ],
+          "type": "object",
+          "properties": {
+            "dayId": {
+              "type": "integer",
+              "description": "id rouz",
+              "format": "int32"
+            },
+            "bellId": {
+              "type": "integer",
+              "description": "id zang",
+              "format": "int32"
+            },
+            "timeTableId": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "TimeTableDeatilsResponse": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "master": {
+              "$ref": "#/components/schemas/Master"
+            },
+            "timeTableBells": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TimeTableBell"
+              },
+              "nullable": true
+            },
+            "course": {
+              "$ref": "#/components/schemas/Course"
+            }
+          },
+          "additionalProperties": false
+        },
+        "UserPaginatedResult": {
+          "type": "object",
+          "properties": {
+            "list": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/User"
+              },
+              "nullable": true
+            },
+            "count": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "page": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "totalPages": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "EditUserRequest": {
+          "type": "object",
+          "properties": {
+            "lastName": {
+              "type": "string",
+              "nullable": true
+            },
+            "firstName": {
+              "type": "string",
+              "nullable": true
+            },
+            "password": {
+              "type": "string",
+              "nullable": true
+            },
+            "code": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProfileRequest": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "nullable": true
+            },
+            "lastName": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "ProfilePasswordRequest": {
+          "type": "object",
+          "properties": {
+            "currentPassword": {
+              "type": "string",
+              "nullable": true
+            },
+            "newPassword": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "AddUserRequest": {
+          "type": "object",
+          "properties": {
+            "lastName": {
+              "type": "string",
+              "nullable": true
+            },
+            "firstName": {
+              "type": "string",
+              "nullable": true
+            },
+            "password": {
+              "type": "string",
+              "nullable": true
+            },
+            "code": {
+              "type": "string",
+              "nullable": true
+            },
+            "role": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "securitySchemes": {
+        "Token": {
+          "type": "apiKey",
+          "description": "JWT Authorization header using the Bearer scheme.",
+          "name": "Authorization",
+          "in": "header"
+        }
+      }
+    },
+    "security": [
+      {
+        "Token": [ ]
+      }
+    ]
+  }
