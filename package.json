@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +18,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.14",
     "scripts-dev": "^1.1.0",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "nodemon": "^2.0.10"
   },
   "devDependencies": {
     "jest": "^27.0.5",

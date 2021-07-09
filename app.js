@@ -4,6 +4,7 @@ const auth = require('./routes/auth');
 const courses = require('./routes/course')
 const timeTableBells = require('./routes/timeTableBells')
 const days = require('./routes/days')
+const bells = require('./routes/bells')
 const app = express();
 
 const swaggerUi = require('swagger-ui-express')
@@ -22,6 +23,7 @@ app.use('/api/Auth', auth);
 app.use('/api/Courses', courses);
 app.use('/api/TimeTableBells', timeTableBells)
 app.use('/api/Days', days);
+app.use('/api/Bells', bells)
 
 /*
     Adding swagger UI
