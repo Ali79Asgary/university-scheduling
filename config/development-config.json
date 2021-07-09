@@ -7,6 +7,8 @@
     "MONGODB_PORT": 27017,
     "MONGODB_DB_NAME": "uni",
     "MONGODB_HOST": "localhost",
+    "MONGODB_USER": "mongodb_user1234",
+    "MONGODB_PASSWORD": "34ct873b7y4394rmy43",
     "MONGODB_TEST_DB_NAME": "JestDB",
     "TEST_ADMIN_CREDS" : { 
         "firstName" : "System", 
