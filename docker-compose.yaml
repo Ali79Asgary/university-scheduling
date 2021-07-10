@@ -6,7 +6,7 @@ services:
       replicas: 4
       restart_policy:
         max_attempts: 3
-        condition: on-failure       
+        condition: on-failure
       update_config:
         parallelism: 3
         delay: 10s
@@ -37,8 +37,8 @@ services:
   proxy:
     image: nginx:1.15-alpine
     ports:
-      - 80:80
-      - 443:443
+      - "443:443"
+      - "80:80"
     depends_on:
       - web
     deploy:
@@ -47,14 +47,8 @@ services:
     volumes:
       - /data/nginx:/etc/nginx/conf.d
       - /data/certbot/conf:/etc/letsencrypt
-      - /data/certbot/www:/var/www/certbot
     networks: 
       - balance
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - /data/certbot/conf:/etc/letsencrypt
-      - /data/certbot/www:/var/www/certbot
 networks:
   balance:
     driver: overlay
