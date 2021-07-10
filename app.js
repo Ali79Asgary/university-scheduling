@@ -5,6 +5,7 @@ const courses = require('./routes/course')
 const timeTableBells = require('./routes/timeTableBells')
 const days = require('./routes/days')
 const bells = require('./routes/bells')
+const timeTables = require('./routes/timeTable')
 const app = express();
 
 /*
@@ -21,5 +22,6 @@ app.use('/api/Courses', courses);
 app.use('/api/TimeTableBells', timeTableBells)
 app.use('/api/Days', days);
 app.use('/api/Bells', bells)
+app.use('/api/TimeTables', timeTables)
 
 module.exports = app
