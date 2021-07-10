@@ -6,12 +6,15 @@ const router = express.Router();
 
 router.get('/', isAuthenticated, async(req, res) => {
     const listOfBells = [];
+    const bells = await Bell.find({});
 
-    for await (const cell of Bell.find()) {
+    for (const bell of bells) {
+        console.log(bell.label);
+
         listOfBells.push({
-            id: cell._id,
-            label: cell.label,
-            bellOfDay: cell.bellOfDay
+            id: bell._id,
+            label: bell.label,
+            bellOfDay: bell.bellOfDay
         })
     }
 
@@ -24,7 +27,7 @@ router.get('/', isAuthenticated, async(req, res) => {
         message: "list of bells",
         data: {
             list: trimmedList,
-            count: trimmedList.length,
+            pageSize: parseInt(req.query.PageSize),
             page: parseInt(req.query.Page),
             totalPages: totalPagesCount
         }

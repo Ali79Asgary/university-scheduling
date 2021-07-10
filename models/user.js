@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
         maxlength: 1024,
         required: true
     },
-    rule: {
+    role: {
         type: String,
         enum: ['Master', 'Admin', 'Student'],
         required: true
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
 
 // adding generateAuthToken function for creating JWT token.
 userSchema.methods.generateAuthToken = function() {
-    const token = jwt.sign({_id: this._id, rule: this.rule}, 'wonderland');
+    const token = jwt.sign({_id: this._id, role: this.role}, 'wonderland');
     return token;
 }
 
@@ -47,9 +47,9 @@ function validateUser(req, res) {
     const schema = Joi.object({
       firstName: Joi.string().min(3).max(255).required(),
       lastName: Joi.string().min(3).max(255).required(),
-      password: Joi.string().min(6).max(1024).required(),
+      password: Joi.string().min(4).max(1024).required(),
       code: Joi.string().min(5).max(10).required(),
-      rule: Joi.string().valid("Master", "Admin", "Student").required()
+      role: Joi.string().valid("Master", "Admin", "Student").required()
     });
 
     return schema.validate(req.body);

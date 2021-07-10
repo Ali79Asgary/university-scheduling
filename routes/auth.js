@@ -31,21 +31,12 @@ router.post("/Login", async (req, res) => {
         token: generatedToken,
         expireAt: jwt.verify(generatedToken, 'wonderland')['iat'],
         user: {
-            code: {
-                value: user.code
-            },
-            id: {
-                value: user.id
-            },
-            firstName: {
-                value: user.firstName
-            },
-            lastName: {
-                value: user.lastName
-            },
-            rule: {
-                value: user.rule
-            }
+            code: user.code,
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: user.role
+
         }
     });
   
@@ -53,7 +44,7 @@ router.post("/Login", async (req, res) => {
 
 function validateRequest(req, res) {
     const schema = Joi.object({
-        password: Joi.string().min(6).max(1024).required(),
+        password: Joi.string().min(4).max(1024).required(),
         code: Joi.string().min(5).max(10).required(),
     });
 

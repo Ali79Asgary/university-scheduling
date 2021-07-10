@@ -14,7 +14,7 @@
         "firstName" : "System", 
         "lastName" : "Administrator", 
         "code" : "admin", 
-        "rule" : "Admin", 
+        "role" : "Admin", 
         "password" : "adminadmin" 
     },
     "STATUS" : {
