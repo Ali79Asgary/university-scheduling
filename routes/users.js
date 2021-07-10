@@ -4,12 +4,12 @@ const {Admin} = require("../models/admin");
 const {Master} = require("../models/master");
 const isAuthenticated = require("../middleware/isAuthenticated");
 const isAdmin = require("../middleware/isAdmin");
-const express = require("express");
 const bcrypt = require("bcrypt");
+const express = require("express");
 const router = express.Router();
 
 /*
-    /api/Users
+    /api/users
 */
 router.get("/", isAuthenticated, isAdmin, async (req, res) => {
     const criteria = {
@@ -36,18 +36,23 @@ router.get("/", isAuthenticated, isAdmin, async (req, res) => {
             id: foundUser._doc._id,
             firstName: foundUser._doc.firstName,
             lastName: foundUser._doc.lastName,
-            rule: foundUser._doc.rule
+            role: foundUser._doc.role
         });
+
+    const totalNumberOfPages = Math.ceil(response.length / req.query.PageSize);
+
+    const startIndex = (req.query.Page - 1) * req.query.PageSize;
+    const trimmedList = response.slice(startIndex, startIndex + parseInt(req.query.PageSize));
 
 
     res.status(200).json({
         success: true,
         message: "Users returned successfully.",
         data: {
-            list: response,
-            count: foundUsers.length,
+            list: trimmedList,
+            count: trimmedList.length,
             Page: req.query['Page'],
-            totalPages: count / req.query['PageSize']
+            totalPages: totalNumberOfPages
         }
 
     });
@@ -71,7 +76,7 @@ router.get("/profile", isAuthenticated, async (req, res) => {
             id: foundUser._id,
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
-            rule: foundUser.rule,
+            role: foundUser.role,
         },
     });
 });
@@ -96,7 +101,7 @@ router.post("/profile", isAuthenticated, async (req, res) => {
             id: foundUser._id,
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
-            rule: foundUser.rule,
+            role: foundUser.role,
         },
     });
 });
@@ -133,13 +138,13 @@ router.post("/profile/ChangePassword", isAuthenticated, async (req, res) => {
             id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
-            rule: user.rule,
+            role: user.role,
         },
     });
 });
 
 router.get("/:id", isAuthenticated, isAdmin, async (req, res) => {
-    const user = await User.findOne({code: req.params["id"]});
+    const user = await User.findOne({_id: req.params["id"]});
 
     if (!user)
         return res.status(404).json({
@@ -155,13 +160,13 @@ router.get("/:id", isAuthenticated, isAdmin, async (req, res) => {
             id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
-            rule: user.rule,
+            role: user.role,
         },
     });
 });
 
 router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
-    const user = await User.findOne({code: req.params["id"]});
+    const user = await User.findOne({_id: req.params["id"]});
     if (!user)
         return res.status(404).json({
             success: false,
@@ -187,7 +192,7 @@ router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
 });
 
 router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
-    const deletedUser = await User.findOneAndDelete({code: req.params["id"]});
+    const deletedUser = await User.findOneAndDelete({_id: req.params["id"]});
 
     if (!deletedUser)
         return res.status(404).json({
@@ -226,7 +231,7 @@ router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         code: req.body.code,
-        rule: req.body.rule,
+        role: req.body.role,
         password: req.body.password,
     });
 
@@ -235,15 +240,15 @@ router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
 
     await user.save();
 
-    let rule_message = "";
+    let role_message = "";
 
-    switch (user.rule) {
+    switch (user.role) {
         case "Student":
             const student = new Student({
                 user: user._id,
                 timeTables: [],
             });
-            rule_message = "Student";
+            role_message = "Student";
             await student.save();
             break;
 
@@ -254,7 +259,7 @@ router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
                 timeTableBells: [],
                 courses: [],
             });
-            rule_message = "Master";
+            role_message = "Master";
             await master.save();
             break;
 
@@ -262,19 +267,19 @@ router.post("/Add", isAuthenticated, isAdmin, async (req, res) => {
             const admin = new Admin({
                 user: user._id,
             });
-            rule_message = "Admin";
+            role_message = "Admin";
             await admin.save();
             break;
     }
 
     res.status(200).json({
         success: true,
-        message: `${rule_message} created successfully.`,
+        message: `${role_message} created successfully.`,
         data: {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             code: req.body.code,
-            rule: req.body.rule,
+            role: req.body.role,
             id: user._id,
         },
     });
@@ -301,7 +306,7 @@ router.post("/AddList", isAuthenticated, isAdmin, async (req, res) => {
             firstName: u.firstName,
             lastName: u.lastName,
             code: u.code,
-            rule: u.rule,
+            role: u.role,
             password: u.password,
         });
 
@@ -310,7 +315,7 @@ router.post("/AddList", isAuthenticated, isAdmin, async (req, res) => {
 
         await user.save();
 
-        switch (user.rule) {
+        switch (user.role) {
             case "Student":
                 const student = new Student({
                     user: user._id,
@@ -341,7 +346,7 @@ router.post("/AddList", isAuthenticated, isAdmin, async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             code: user.code,
-            rule: user.rule,
+            role: user.role,
             id: user._id,
         });
     }
