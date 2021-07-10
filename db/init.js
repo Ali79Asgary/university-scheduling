@@ -14,7 +14,7 @@ db.users.insert({ "_id" : ObjectId("60d8b450474d1c80014e80a5"),
     "firstName" : "System",
     "lastName" : "Administrator",
     "code" : "admin",
-    "rule" : "Admin",
+    "role" : "Admin",
     "password" : "$2b$10$t/ftiZPdpHFs5s8QCP87j.FD0vVYL6bJjRJ4XUIP9suaGjTZZo8wS",
     "__v" : 0 
 })
