@@ -1,4 +1,4 @@
-const { User, validate } = require("../models/user");
+const { User } = require("../models/user");
 const { Student } = require("../models/student");
 const { Master } = require("../models/master");
 const { Day } = require("../models/day");
@@ -16,14 +16,15 @@ const router = express.Router();
 
 // checking if there is a class in that day.
 async function isThereCourseInDay(course, day) {
-    const currentCourse = await Course.findById(course._id);
-    const courseTimeTables = currentCourse.timeTables;
 
-    for (const courseTimeTable of courseTimeTables) {
-        for (const currentTimeTableBell of courseTimeTable.timeTableBells) {
+    for (const courseTimeTableId of course.timeTables) {
+        const courseTimeTable = await TimeTable.findOne({_id: courseTimeTableId});
 
-            const timeTableBell = await TimeTableBell.findById(currentTimeTableBell);
-            const currentDay = await Day.findById(timeTableBell.Day);
+        for (const courseTimeTableBellId of courseTimeTable.timeTableBells) {
+            const courseTimeTableBell = await TimeTableBell.findOne({_id: courseTimeTableBellId});
+
+            const currentDay = await Day.findById(courseTimeTableBell.Day);
+
             if (currentDay.dayOfWeek === day.dayOfWeek)
                 return true;
         }
@@ -35,8 +36,11 @@ async function isMaxClassPerBellOver(timeTableBell, maxClassPerBell) {
     const allTimeTables = await TimeTable.find({});
     let count = 0;
 
-    for (const currentTimeTable of allTimeTables) {
-        for (const currentTimeTableBell of currentTimeTable.timeTableBells) {
+    for (const currentTimeTableId of allTimeTables) {
+        const currentTimeTable = await TimeTable.findOne({_id: currentTimeTableId});
+
+        for (const currentTimeTableBellId of currentTimeTable.timeTableBells) {
+            const currentTimeTableBell = await TimeTableBell.findOne({_id: currentTimeTableBellId});
 
             const currentDay = Day.findOne({_id: currentTimeTableBell.Day});
             const currentBell = Bell.findOne({_id: currentTimeTableBell.Bell});
@@ -137,7 +141,7 @@ router.post('/StartProcess', isAuthenticated, isAdmin, async function(req, res) 
                 }
             }
         }
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: 'Algorithm Finished Successfully.'
         });
@@ -213,7 +217,7 @@ router.get('/', isAuthenticated, isStudent, async function(req, res) {
         data: {
             list: trimmedList,
             count: trimmedList.length,
-            page: req.query['Page'],
+            page: parseInt(req.query['Page']),
             totalPages: totalNumberOfPages
         }
 
