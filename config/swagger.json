@@ -5,6 +5,44 @@
       "version": "v1"
     },
     "paths": {
+      "/api/Auth/Login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthRequest"
+                }
+              },
+              "application/*+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AuthResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "/api/Announcements": {
         "get": {
           "tags": [
@@ -15,18 +53,16 @@
               "name": "MasterId",
               "in": "query",
               "schema": {
-                "type": "integer",
-                "format": "int32",
-                "nullable": true
+              "type": "string",
+              "nullable": true
               }
             },
             {
               "name": "TimeTableId",
               "in": "query",
               "schema": {
-                "type": "integer",
-                "format": "int32",
-                "nullable": true
+              "type": "string",
+              "nullable": true
               }
             },
             {
@@ -34,9 +70,8 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
               }
             },
             {
@@ -44,9 +79,9 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
+                
               }
             }
           ],
@@ -111,8 +146,7 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
               }
             }
           ],
@@ -139,52 +173,13 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
               }
             }
           ],
           "responses": {
             "200": {
               "description": "Success"
-            }
-          }
-        }
-      },
-      "/api/Auth/Login": {
-        "post": {
-          "tags": [
-            "Auth"
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthRequest"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthRequest"
-                }
-              },
-              "application/*+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Success",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AuthResponse"
-                  }
-                }
-              }
             }
           }
         }
@@ -200,9 +195,9 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
+                
               }
             },
             {
@@ -210,9 +205,9 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
+                
               }
             }
           ],
@@ -277,8 +272,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -305,8 +300,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -345,8 +340,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -379,9 +374,8 @@
               "in": "query",
               "description": "تعداد واحد",
               "schema": {
-                "type": "integer",
+                "type": "string",
                 "description": "تعداد واحد",
-                "format": "int32",
                 "nullable": true
               }
             },
@@ -390,9 +384,9 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
+                
               }
             },
             {
@@ -400,9 +394,9 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
+                
               }
             }
           ],
@@ -467,8 +461,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -495,8 +489,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -535,8 +529,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -560,9 +554,9 @@
               "description": "شناسه",
               "required": true,
               "schema": {
-                "type": "integer",
-                "description": "شناسه",
-                "format": "int32"
+                "type": "string",
+                "description": "شناسه"
+                
               }
             },
             {
@@ -570,9 +564,9 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
+                
               }
             },
             {
@@ -580,9 +574,9 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
+                
               }
             }
           ],
@@ -613,9 +607,9 @@
               "description": "شناسه",
               "required": true,
               "schema": {
-                "type": "integer",
-                "description": "شناسه",
-                "format": "int32"
+                "type": "string",
+                "description": "شناسه"
+                
               }
             },
             {
@@ -623,9 +617,9 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
+                
               }
             },
             {
@@ -633,9 +627,8 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
               }
             }
           ],
@@ -666,9 +659,9 @@
               "description": "شناسه درس",
               "required": true,
               "schema": {
-                "type": "integer",
-                "description": "شناسه درس",
-                "format": "int32"
+                "type": "string",
+                "description": "شناسه درس"
+                
               }
             }
           ],
@@ -690,9 +683,8 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
               }
             },
             {
@@ -700,9 +692,8 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
               }
             }
           ],
@@ -767,8 +758,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -795,8 +786,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -835,8 +826,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -858,9 +849,9 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
+                
               }
             },
             {
@@ -868,9 +859,9 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
+                
               }
             }
           ],
@@ -935,8 +926,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -963,8 +954,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -987,9 +978,8 @@
               "in": "query",
               "description": "شناسه دانشجو",
               "schema": {
-                "type": "integer",
+                "type": "string",
                 "description": "شناسه دانشجو",
-                "format": "int32",
                 "nullable": true
               }
             },
@@ -998,9 +988,9 @@
               "in": "query",
               "description": "شناسه درس",
               "schema": {
-                "type": "integer",
-                "description": "شناسه درس",
-                "format": "int32",
+                "type": "string",
+                "description": "شناسه درس"
+                ,
                 "nullable": true
               }
             },
@@ -1009,9 +999,8 @@
               "in": "query",
               "description": "شناسه استاد",
               "schema": {
-                "type": "integer",
+                "type": "string",
                 "description": "شناسه استاد",
-                "format": "int32",
                 "nullable": true
               }
             },
@@ -1020,9 +1009,9 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
+                
               }
             },
             {
@@ -1030,9 +1019,9 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
+                
               }
             }
           ],
@@ -1061,8 +1050,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -1115,9 +1104,8 @@
               "in": "query",
               "description": "تعداد کلاس های کوجود",
               "schema": {
-                "type": "integer",
-                "description": "تعداد کلاس های کوجود",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد کلاس های کوجود"               
               }
             }
           ],
@@ -1150,9 +1138,8 @@
               "in": "query",
               "description": "تعداد آیتم های موجود در صفحه",
               "schema": {
-                "type": "integer",
-                "description": "تعداد آیتم های موجود در صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "تعداد آیتم های موجود در صفحه"
               }
             },
             {
@@ -1160,9 +1147,9 @@
               "in": "query",
               "description": "شماره صفحه",
               "schema": {
-                "type": "integer",
-                "description": "شماره صفحه",
-                "format": "int32"
+                "type": "string",
+                "description": "شماره صفحه"
+                
               }
             },
             {
@@ -1201,8 +1188,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -1229,8 +1216,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -1276,8 +1263,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "string"
+                
               }
             }
           ],
@@ -1482,8 +1469,8 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "lastName": {
               "type": "string",
@@ -1510,12 +1497,12 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "userId": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "user": {
               "$ref": "#/components/schemas/User"
@@ -1530,15 +1517,15 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "label": {
               "type": "string"
             },
             "dayOfWeek": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1550,15 +1537,15 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "label": {
               "type": "string"
             },
             "bellOfDay": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1571,8 +1558,8 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "day": {
               "$ref": "#/components/schemas/Day"
@@ -1590,15 +1577,15 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "title": {
               "type": "string"
             },
             "unitsCount": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1610,8 +1597,8 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "master": {
               "$ref": "#/components/schemas/Master"
@@ -1638,12 +1625,12 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "timeTableId": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "timeTable": {
               "$ref": "#/components/schemas/TimeTable"
@@ -1665,16 +1652,16 @@
               "nullable": true
             },
             "count": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "page": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "totalPages": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1687,8 +1674,8 @@
           "type": "object",
           "properties": {
             "timeTableId": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "message": {
               "type": "string"
@@ -1738,16 +1725,16 @@
               "nullable": true
             },
             "count": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "page": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "totalPages": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1760,8 +1747,8 @@
               "nullable": true
             },
             "bellOfDay": {
-              "type": "integer",
-              "format": "int32",
+              "type": "string"
+              ,
               "nullable": true
             }
           },
@@ -1778,16 +1765,16 @@
               "nullable": true
             },
             "count": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "page": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "totalPages": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1800,8 +1787,8 @@
               "nullable": true
             },
             "unitsCount": {
-              "type": "integer",
-              "format": "int32",
+              "type": "string"
+              ,
               "nullable": true
             }
           },
@@ -1818,16 +1805,16 @@
               "nullable": true
             },
             "count": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "page": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "totalPages": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1843,16 +1830,16 @@
               "nullable": true
             },
             "count": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "page": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "totalPages": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1868,16 +1855,16 @@
               "nullable": true
             },
             "count": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+            
             },
             "page": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "totalPages": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             }
           },
           "additionalProperties": false
@@ -1890,8 +1877,7 @@
               "nullable": true
             },
             "dayOfWeek": {
-              "type": "integer",
-              "format": "int32",
+              "type": "string",
               "nullable": true
             }
           },
@@ -1908,16 +1894,15 @@
               "nullable": true
             },
             "count": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "page": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "totalPages": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           },
           "additionalProperties": false
@@ -1930,18 +1915,16 @@
           "type": "object",
           "properties": {
             "dayId": {
-              "type": "integer",
-              "description": "id rouz",
-              "format": "int32"
+              "type": "string",
+              "description": "id rouz"            
             },
             "bellId": {
-              "type": "integer",
-              "description": "id zang",
-              "format": "int32"
+              "type": "string",
+              "description": "id zang"
+              
             },
             "timeTableId": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"         
             }
           },
           "additionalProperties": false
@@ -1950,8 +1933,8 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "master": {
               "$ref": "#/components/schemas/Master"
@@ -1980,16 +1963,15 @@
               "nullable": true
             },
             "count": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "page": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+              
             },
             "totalPages": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"             
             }
           },
           "additionalProperties": false
