@@ -31,21 +31,12 @@ router.post("/Login", async (req, res) => {
         token: generatedToken,
         expireAt: jwt.verify(generatedToken, 'wonderland')['iat'],
         user: {
-            code: {
-                value: user.code
-            },
-            id: {
-                value: user.id
-            },
-            firstName: {
-                value: user.firstName
-            },
-            lastName: {
-                value: user.lastName
-            },
-            rule: {
-                value: user.rule
-            }
+            code: user.code,
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: user.role
+
         }
     });
   
