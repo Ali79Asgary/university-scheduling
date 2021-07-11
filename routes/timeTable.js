@@ -17,42 +17,29 @@ const router = express.Router();
 // checking if there is a class in that day.
 async function isThereCourseInDay(course, day) {
 
-    for (const courseTimeTableId of course.timeTables) {
-        const courseTimeTable = await TimeTable.findOne({_id: courseTimeTableId});
+    await course.populate({ path : "timeTables", populate : {path : "timeTableBells", populate : "Day"}}).execPopulate()
 
-        for (const courseTimeTableBellId of courseTimeTable.timeTableBells) {
-            const courseTimeTableBell = await TimeTableBell.findOne({_id: courseTimeTableBellId});
-
-            const currentDay = await Day.findById(courseTimeTableBell.Day);
-
-            if (currentDay.dayOfWeek === day.dayOfWeek)
+    for (const courseTimeTable of course.timeTables)
+        for (const courseTimeTableBell of courseTimeTable.timeTableBells) 
+            if (courseTimeTableBell.Day.dayOfWeek === day.dayOfWeek)
                 return true;
-        }
-    }
     return false;
 }
 
 async function isMaxClassPerBellOver(timeTableBell, maxClassPerBell) {
-    const allTimeTables = await TimeTable.find({});
-    let count = 0;
+    const allTimeTables = await TimeTable
+        .find({})
+        .populate( { path : "timeTableBells" , populate : "Day Bell"}) 
 
-    for (const currentTimeTableId of allTimeTables) {
-        const currentTimeTable = await TimeTable.findOne({_id: currentTimeTableId});
+    await timeTableBell.populate("Day").populate("Bell").execPopulate()
+    let count = 0; 
 
-        for (const currentTimeTableBellId of currentTimeTable.timeTableBells) {
-            const currentTimeTableBell = await TimeTableBell.findOne({_id: currentTimeTableBellId});
-
-            const currentDay = Day.findOne({_id: currentTimeTableBell.Day});
-            const currentBell = Bell.findOne({_id: currentTimeTableBell.Bell});
-
-            const timeTableBellDay = Day.findOne({_id: timeTableBell.Day});
-            const timeTableBellBell = Bell.findOne({_id: timeTableBell.Bell});
-
-            if ((currentDay.dayOfWeek === timeTableBellDay.dayOfWeek) &&
-                (currentBell.bellOfDay === timeTableBellBell.bellOfDay))
+    for (const currentTimeTable of allTimeTables) 
+        for (const currentTimeTableBell of currentTimeTable.timeTableBells) 
+            if ((currentTimeTableBell.Day.dayOfWeek  === timeTableBell.Day.dayOfWeek) &&
+                (currentTimeTableBell.Bell.bellOfDay === timeTableBell.Bell.bellOfDay))
                     count++
-        }
-    }
+  
     return count >= parseInt(maxClassPerBell);
 }
 
@@ -64,44 +51,50 @@ router.post('/StartProcess', isAuthenticated, isAdmin, async function(req, res) 
 
         if (course.unitCounts === 3) {
 
-            let confirmed_timeTableBells = [];
-
             for (const master_id of course.masters) {
 
-                const master = await Master.findOne({user: master_id});
-                console.log(master);
+                let confirmed_timeTableBells = [];
+
+                const master = await Master
+                    .findOne({user: master_id})
+                    .populate({path: "timeTableBells", populate : { path: "Day"}});
 
                 if (master.timeTableBells.length === 0)
                     continue;
 
                 for (let i = 0; i < 2; i++) {
-                    const currentTimTableBell = await TimeTableBell.
-                        findOne({_id: master.timeTableBells[master.timeTableBells.length - 1]._id});
 
-                    const currentDay = await Day.findById(currentTimTableBell.Day);
+                    if (master.timeTableBells.length === 0)
+                        continue;
+
+                    const currentTimTableBell = master.timeTableBells[master.timeTableBells.length - 1];
+
+                    const currentDay = currentTimTableBell.Day;
 
                     if (!await isThereCourseInDay(course, currentDay) &&
                         !await isMaxClassPerBellOver(master.timeTableBells[master.timeTableBells.length - 1], maxClassPerBell)) {
 
                         confirmed_timeTableBells.push(master.timeTableBells[master.timeTableBells.length - 1]);
-
-                        const timeTable = new TimeTable({
-                            master: master,
-                            students: [],
-                            timeTableBells: confirmed_timeTableBells,
-                            course: course
-                        });
-                        await timeTable.save();
-
-                        master.timeTables.push(timeTable);
                         master.timeTableBells.pop();
-                        await master.save();
-
-                        course.timeTables.push(timeTable);
-                        await course.save();
-
                     }
                 }
+                if (confirmed_timeTableBells.length === 2) {
+                    const timeTable = new TimeTable({
+                        master: master,
+                        students: [],
+                        timeTableBells: confirmed_timeTableBells,
+                        course: course
+                    });
+                    await timeTable.save();
+
+                    master.timeTables.push(timeTable);
+                    await master.save();
+
+                    course.timeTables.push(timeTable);
+                    await course.save();
+                }
+
+
             }
         }
 
@@ -109,15 +102,16 @@ router.post('/StartProcess', isAuthenticated, isAdmin, async function(req, res) 
 
             for (const master_id of course.masters) {
 
-                const master = await Master.findOne({user: master_id});
+                const master = await Master
+                    .findOne({user: master_id})
+                    .populate({path: "timeTableBells", populate : { path: "Day"}});
 
                 if (master.timeTableBells.length === 0)
                     continue;
 
-                const currentTimTableBell = await TimeTableBell.
-                    findOne({_id: master.timeTableBells[master.timeTableBells.length - 1]._id});
+                const currentTimTableBell = master.timeTableBells[master.timeTableBells.length - 1];
 
-                const currentDay = await Day.findById(currentTimTableBell.Day);
+                const currentDay = currentTimTableBell.Day;
 
                 if (!await isThereCourseInDay(course, currentDay) &&
                     !await isMaxClassPerBellOver(master.timeTableBells[master.timeTableBells.length - 1], maxClassPerBell)) {
@@ -141,12 +135,11 @@ router.post('/StartProcess', isAuthenticated, isAdmin, async function(req, res) 
                 }
             }
         }
-        return res.status(200).json({
+    }
+    return res.status(200).json({
             success: true,
             message: 'Algorithm Finished Successfully.'
         });
-
-    }
 })
 
 router.get('/', isAuthenticated, isStudent, async function(req, res) {
