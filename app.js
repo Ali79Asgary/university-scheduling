@@ -8,6 +8,7 @@ const bells = require('./routes/bells')
 const timeTables = require('./routes/timeTable')
 const announcements = require('./routes/announcements')
 const app = express();
+const cors = require('cors')
 
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./config/swagger.json')
@@ -16,6 +17,11 @@ const swaggerDocument = require('./config/swagger.json')
     Parses incoming requests with JSON payloads
 */
 app.use(express.json());
+
+/*
+    Enable CORS 
+*/
+app.use(cors())
 
 /*
     Adding routes to the express application
