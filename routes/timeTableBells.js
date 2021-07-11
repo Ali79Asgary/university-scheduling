@@ -27,7 +27,7 @@ const config = require('../config/development-config.json');
 */
 router.get("/", isAuthenticated, isAdminOrMaster, async (req, res) => {
 
-    if( req.user.rule == 'Admin'){
+    if( req.user.role == 'Admin'){
 
         await TimeTableBell
         .find({}) 
@@ -133,7 +133,7 @@ router.get("/", isAuthenticated, isAdminOrMaster, async (req, res) => {
             Access own
 */
 router.get("/:id", isAuthenticated, isAdminOrMaster, async (req, res) => {
-    if( req.user.rule == 'Admin'){
+    if( req.user.role == 'Admin'){
         await TimeTableBell.findOne( { _id :req.params['id']})
         .exec(async (err, timeTableBell) => {
             if(err)
@@ -282,7 +282,7 @@ router.post("/", isAuthenticated, isMaster, async (req, res) => {
 /* /api/TimeTableBells/12 */
 router.delete("/:id", isAuthenticated, isAdminOrMaster, async (req, res) => {
     /* TODO: when admin removes a ttb, the ref in master is still there. you should remove the foreign references too*/
-    if( req.user.rule == 'Admin'){
+    if( req.user.role == 'Admin'){
 
         await TimeTableBell.findByIdAndDelete(req.params["id"])
         .exec( async (err, timeTableBell) => {

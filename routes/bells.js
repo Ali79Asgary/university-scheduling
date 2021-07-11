@@ -84,6 +84,8 @@ router.post("/", isAuthenticated, isAdmin, async (req, res) => {
     });
 });
 
+/* TODO : Breaks if the given input (number) is String */
+
 router.put("/:id", isAuthenticated, isAdmin, async(req, res) => {
 
     const bell = await Bell.findById(req.params["id"]);

@@ -18,7 +18,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.14",
     "nodemon": "^2.0.10",
-    "scripts-dev": "^1.1.0"
+    "scripts-dev": "^1.1.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "jest": "^27.0.5",
