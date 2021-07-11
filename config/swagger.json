@@ -1922,9 +1922,6 @@
               "type": "string",
               "description": "id zang"
               
-            },
-            "timeTableId": {
-              "type": "string"         
             }
           },
           "additionalProperties": false

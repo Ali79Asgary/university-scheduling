@@ -79,7 +79,7 @@ router.get("/", isAuthenticated, isAdminOrMaster, async (req, res) => {
     else{
         await Master
         .findOne({ user : req.user._id})
-        .populate({path: "timeTableBells"})
+        .populate({path: "timeTableBells", populate : { path: "Day Bell"}})
         .exec( async (err, user_master) => {
     
             if(err)

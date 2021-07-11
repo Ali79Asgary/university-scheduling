@@ -1,10 +1,7 @@
-name: Node.js CI
+name: Docker-Node.js CI
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
     branches:
       - master
 
@@ -13,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [12.x]
         mongodb-version: ['4.0', '4.2', '4.4']
 
     steps:

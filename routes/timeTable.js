@@ -220,9 +220,12 @@ router.get('/', isAuthenticated, isStudent, async function(req, res) {
 })
 
 router.get('/:id', isAuthenticated, isStudent, async function(req, res) {
-    const timeTable = await TimeTable.findById(req.params['id']);
-    const master = await Master.findOne({_id: timeTable.master});
-    const user = await User.findOne({_id: master.user});
+
+    const timeTable = await TimeTable
+    .findById(req.params['id'])
+    .populate({path: "timeTableBells", populate : {path : "Day Bell"}})
+    .populate({path: "master", populate : {path : "user"}})
+    .populate({path: "course"});
 
     if (!timeTable)
         return res.status(404).json({
@@ -230,37 +233,27 @@ router.get('/:id', isAuthenticated, isStudent, async function(req, res) {
             message: "TimeTable not found."
         });
 
-    if (!master)
-        return res.status(404).json({
-            success: false,
-            message: "Master not found."
-        });
-
     const allTimeTableBells = [];
-    for (const timeTableBellId of timeTable.timeTableBells) {
-
-        const timeTableBell = await TimeTableBell.findOne({_id: timeTable.timeTableBells});
-        const bell = await Bell.findOne({_id: timeTableBell.Bell});
-        const day = await Day.findOne({_id: timeTableBell.Day});
-
+    for (const timeTableBell of timeTable.timeTableBells) {
         allTimeTableBells.push(
             {
                 id: timeTableBell._id,
                 day: {
-                    id: day._id,
-                    label: day.label,
-                    dayOfWeek: day.dayOfWeek
+                    id: timeTableBell.Day._id,
+                    label: timeTableBell.Day.label,
+                    dayOfWeek: timeTableBell.Day.dayOfWeek
                 },
                 bell: {
-                    id: bell._id,
-                    label: bell.label,
-                    bellOfDay: bell.bellOfDay
+                    id: timeTableBell.Bell._id,
+                    label: timeTableBell.Bell.label,
+                    bellOfDay: timeTableBell.Bell.bellOfDay
                 }
             }
         );
     }
-
-    const course = await Course.findOne({_id: timeTable.course});
+    const master = timeTable.master
+    const user = master.user
+    const course = timeTable.course
 
     return res.status(200).json({
        success: true,
@@ -269,7 +262,7 @@ router.get('/:id', isAuthenticated, isStudent, async function(req, res) {
            id: timeTable._id,
            master: {
                id: master._id,
-               userId: master.user,
+               userId: user._id,
                user: {
                    id: user._id,
                    lastName: user.lastName,

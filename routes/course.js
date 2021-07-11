@@ -122,9 +122,20 @@ router.put("/:id", isAuthenticated, isAdmin, async (req, res) => {
                     message: "The update procedure failed!",
                 });
             }
+            if(!doc){
+                return res.status(404).json({
+                    success: false,
+                    message: "Course doesn't exist",
+                });
+            }
             return res.status(200).json({
                 success: true,
                 message: "The requested updated successfully!",
+                data: {
+                    id : doc._id,
+                    title: req.body.title,
+                    unitsCount: req.body.unitsCount
+                }
             });
         }
     );
@@ -136,12 +147,22 @@ router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
         if (err) {
             return res.status(404).json({
                 success: false,
-                message: "The requested course does not exist!",
+                message: "The requested course does not exist!"
             });
         }
+        if(!doc)
+            return res.status(404).json({
+                success: false,
+                message: "The requested course does not exist!",
+            });
         return res.status(200).json({
             success: true,
             message: "The requested course deleted successfully!",
+            data: {
+                id : doc._id,
+                title: doc.title,
+                unitsCount: doc.unitCounts
+            }
         });
     });
 });
