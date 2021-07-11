@@ -200,6 +200,8 @@ router.delete("/:id", isAuthenticated, isAdmin, async (req, res) => {
             message: "User doesnt exist.",
         });
 
+    await Student.findOneAndDelete({user: deletedUser._id});
+
     res.status(200).json({
         success: true,
         message: "User deleted successfully.",
