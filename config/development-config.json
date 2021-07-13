@@ -1,5 +1,6 @@
 {
     "NODE_APP_PORT": 3000,
+    "NODE_ENV": "development",
     "MONGOOSE_config": { 
         "useNewUrlParser": true, 
         "useUnifiedTopology": true 

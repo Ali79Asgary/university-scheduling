@@ -18,7 +18,13 @@ config.MONGODB_USER = process.env.MONGODB_USER || config.MONGODB_USER
 /*
     Connect to database using the credentials defined in config/{development/production}-config.json file
 */
-const DB_URL = `mongodb://${config.MONGODB_USER}:${config.MONGODB_PASSWORD}@${config.MONGODB_HOST}:${config.MONGODB_PORT}/${config.MONGODB_DB_NAME}`
+const get_db_url = () => {
+    if(config.NODE_ENV == "production") 
+        return `mongodb://${config.MONGODB_USER}:${config.MONGODB_PASSWORD}@${config.MONGODB_HOST}:${config.MONGODB_PORT}/${config.MONGODB_DB_NAME}`;
+    return `mongodb://${config.MONGODB_HOST}:${config.MONGODB_PORT}/${config.MONGODB_DB_NAME}`
+}
+
+const DB_URL = get_db_url()
 mongoose.connect(DB_URL, config.MONGOOSE_config)
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...'));
